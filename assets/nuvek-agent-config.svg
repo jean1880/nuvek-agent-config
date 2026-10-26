@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <!-- nuvek-agent-config icon. Original artwork for nuvek-agent-config, built on the author's
+       eight-tooth gear mark: the source document, its lines drawn as settings sliders, set by
+       the gear. -->
+  <defs>
+    <linearGradient id="ac-rim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#a08cff"/>
+      <stop offset="1" stop-color="#5a44c8"/>
+    </linearGradient>
+    <linearGradient id="ac-screen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2b2442"/>
+      <stop offset="1" stop-color="#181425"/>
+    </linearGradient>
+    <linearGradient id="ac-page" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e2e2ff"/>
+      <stop offset="1" stop-color="#aeaaf2"/>
+    </linearGradient>
+    <linearGradient id="ac-gear" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#a29ea4"/>
+      <stop offset="1" stop-color="#8a868c"/>
+    </linearGradient>
+  </defs>
+  <!-- depth: the same tile, dropped and darkened (GNOME HIG front-facing depth) -->
+  <rect x="12" y="17" width="104" height="104" rx="18" fill="#0d0a16" opacity="0.55"/>
+  <!-- tile rim -->
+  <rect x="12" y="12" width="104" height="104" rx="18" fill="url(#ac-rim)"/>
+  <!-- screen -->
+  <rect x="18" y="18" width="92" height="92" rx="13" fill="url(#ac-screen)"/>
+  <!-- soft top highlight -->
+  <rect x="26" y="21" width="76" height="2" rx="1" fill="#ffffff" opacity="0.07"/>
+  <!-- the source document, with a folded corner -->
+  <path fill="url(#ac-page)" d="M33 26H62L78 42V94A7 7 0 0 1 71 101H33A7 7 0 0 1 26 94V33A7 7 0 0 1 33 26Z"/>
+  <path fill="#8f84e0" d="M62 26V37A5 5 0 0 0 67 42H78Z"/>
+  <!-- its lines, as sliders: one setting per agent -->
+  <g fill="none" stroke="#2b2442" stroke-width="5" stroke-linecap="round">
+    <path d="M35 52H68"/>
+    <path d="M35 67H68"/>
+    <path d="M35 82H58"/>
+  </g>
+  <circle cx="58" cy="52" r="6.5" fill="#e8846b" stroke="#2b2442" stroke-width="4"/>
+  <circle cx="43" cy="67" r="6.5" fill="#5b9cf6" stroke="#2b2442" stroke-width="4"/>
+  <circle cx="50" cy="82" r="6.5" fill="#4cc38a" stroke="#2b2442" stroke-width="4"/>
+  <!-- the gear, in the author's grey with its dark outline; its hub sits on the screen -->
+  <path transform="translate(88 86) scale(0.5)" fill="#353435" fill-rule="evenodd"
+        stroke="#353435" stroke-width="10" stroke-linejoin="round"
+        d="M-7.00 -29.17 L-5.91 -39.56 L5.91 -39.56 L7.00 -29.17 A30 30 0 0 1 15.67 -25.58 L23.79 -32.15 L32.15 -23.79 L25.58 -15.67 A30 30 0 0 1 29.17 -7.00 L39.56 -5.91 L39.56 5.91 L29.17 7.00 A30 30 0 0 1 25.58 15.67 L32.15 23.79 L23.79 32.15 L15.67 25.58 A30 30 0 0 1 7.00 29.17 L5.91 39.56 L-5.91 39.56 L-7.00 29.17 A30 30 0 0 1 -15.67 25.58 L-23.79 32.15 L-32.15 23.79 L-25.58 15.67 A30 30 0 0 1 -29.17 7.00 L-39.56 5.91 L-39.56 -5.91 L-29.17 -7.00 A30 30 0 0 1 -25.58 -15.67 L-32.15 -23.79 L-23.79 -32.15 L-15.67 -25.58 A30 30 0 0 1 -7.00 -29.17 Z M0 -13 A13 13 0 1 0 0 13 A13 13 0 1 0 0 -13 Z"/>
+  <path transform="translate(88 86) scale(0.5)" fill="url(#ac-gear)" fill-rule="evenodd"
+        d="M-7.00 -29.17 L-5.91 -39.56 L5.91 -39.56 L7.00 -29.17 A30 30 0 0 1 15.67 -25.58 L23.79 -32.15 L32.15 -23.79 L25.58 -15.67 A30 30 0 0 1 29.17 -7.00 L39.56 -5.91 L39.56 5.91 L29.17 7.00 A30 30 0 0 1 25.58 15.67 L32.15 23.79 L23.79 32.15 L15.67 25.58 A30 30 0 0 1 7.00 29.17 L5.91 39.56 L-5.91 39.56 L-7.00 29.17 A30 30 0 0 1 -15.67 25.58 L-23.79 32.15 L-32.15 23.79 L-25.58 15.67 A30 30 0 0 1 -29.17 7.00 L-39.56 5.91 L-39.56 -5.91 L-29.17 -7.00 A30 30 0 0 1 -25.58 -15.67 L-32.15 -23.79 L-23.79 -32.15 L-15.67 -25.58 A30 30 0 0 1 -7.00 -29.17 Z M0 -13 A13 13 0 1 0 0 13 A13 13 0 1 0 0 -13 Z"/>
+</svg>

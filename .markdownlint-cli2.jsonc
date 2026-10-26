@@ -1,0 +1,31 @@
+{
+  // Relaxed for the existing style: long prose lines, inline HTML comments (customise and only:
+  // markers), repeated headings across sections, and bold used as a lead-in. Skills and agent
+  // prompts are read by models, so they keep compact headings (MD022), bare repository URLs
+  // (MD034) and literal `: ` code spans (MD038); the Contributor Covenant text keeps its spacing
+  // (MD012).
+  "config": {
+    "default": true,
+    "MD012": false,
+    "MD022": false,
+    "MD034": false,
+    "MD038": false,
+    "MD013": false,
+    "MD033": false,
+    "MD036": false,
+    "MD024": false,
+    "MD025": false,
+    "MD041": false,
+    "MD029": false,
+    "MD032": false,
+    "MD031": false,
+    "MD040": false,
+    "MD060": false,
+    "MD007": false,
+    "MD030": false,
+    "MD046": false,
+    "MD049": false,
+    "MD050": false
+  },
+  "ignores": ["node_modules"]
+}

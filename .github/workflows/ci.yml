@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  markdown:
+    name: markdownlint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "24"
+      - name: Lint Markdown
+        run: npx --yes markdownlint-cli2@0.18.1 "**/*.md" "#node_modules"
+
+  toml:
+    name: toml and json parse
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: taiki-e/install-action@8cca0918f8471c33515202b73f56ab27f2bed283 # v2.87.29
+        with:
+          tool: taplo-cli
+      - name: Parse sync sources
+        run: taplo check sync/map.toml sync/mcp.toml sync/permissions.toml sync/hooks.toml sync/mcp.toml.example sync/permissions.toml.example sync/hooks.toml.example sync/models.toml.example
+      - name: Parse plugin manifest
+        run: jq empty .claude-plugin/plugin.json
+
+  secrets:
+    name: gitleaks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Install gitleaks (pinned release, checksum verified)
+        env:
+          GITLEAKS_VERSION: 8.30.1
+          GITLEAKS_SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
+        run: |
+          set -euo pipefail
+          tgz="$RUNNER_TEMP/gitleaks.tgz"
+          curl -fsSLo "$tgz" "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          echo "${GITLEAKS_SHA256}  $tgz" | sha256sum -c -
+          mkdir -p "$RUNNER_TEMP/bin"
+          tar -xzf "$tgz" -C "$RUNNER_TEMP/bin" gitleaks
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+      - name: Scan history
+        run: gitleaks git --redact --no-banner .
+
+  # Becomes a required check once nuvek-agent-sync is public; until then the repository and its tag
+  # may not exist, so a failure here must not block merges.
+  agent-sync:
+    name: agent-sync compatibility
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Install agent-sync
+        run: cargo install --locked --git https://github.com/jean1880/nuvek-agent-sync --tag v1.0.0 --root "$RUNNER_TEMP/agent-sync" --bin agent-sync
+      - name: Check the sources against an isolated home
+        env:
+          PROJECTS_DIR: ${{ runner.temp }}/projects
+        run: bash scripts/agent-sync-compat.sh "$RUNNER_TEMP/agent-sync/bin/agent-sync"
+
+  public:
+    name: no private deployment details
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Grep for private details
+        run: bash scripts/check-public.sh
