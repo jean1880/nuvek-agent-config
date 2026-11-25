@@ -68,7 +68,15 @@ jobs:
     continue-on-error: true
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # The binary of a fixed tag never changes, so it is compiled once and restored after that.
+      - name: Cache agent-sync
+        id: agent-sync-cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ runner.temp }}/agent-sync
+          key: ${{ runner.os }}-agent-sync-v1.0.0
       - name: Install agent-sync
+        if: steps.agent-sync-cache.outputs.cache-hit != 'true'
         run: cargo install --locked --git https://github.com/jean1880/nuvek-agent-sync --tag v1.0.0 --root "$RUNNER_TEMP/agent-sync" --bin agent-sync
       - name: Check the sources against an isolated home
         env:
